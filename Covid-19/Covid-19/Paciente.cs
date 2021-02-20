@@ -42,7 +42,7 @@ namespace Covid_19
             return idade;
         }
 
-        public bool VerificaStatus()
+        public void VerificaStatus()
         {
             string resultado = "";
             do
@@ -53,12 +53,10 @@ namespace Covid_19
                 if (resultado == "S")
                 {
                     Covid = true;
-                    return Covid;
                 }
                 else if (resultado == "N")
                 {
                     Covid = false;
-                    return Covid;
                 }
                 else
                 {
@@ -66,14 +64,14 @@ namespace Covid_19
                     Console.WriteLine("VOCÊ DEVE DIGITAR APENAS [S] OU [N]!!\n");
                     Console.ResetColor();
                 } 
-            } while (resultado != "S" || resultado != "N");
-            return Covid;
+            } while (resultado != "S" && resultado != "N");
         }
-        public Paciente Importancia()
+        public void Importancia()
         {
+            Console.Clear();
             string resposta;
 
-            Console.Write("O paciente possui comorbidades?: ");
+            Console.Write("O paciente possui comorbidades[s/n]?: ");
             resposta = Console.ReadLine();
 
             if (resposta.ToUpper() == "S")
@@ -87,18 +85,6 @@ namespace Covid_19
 
             Console.Write("Qual a data inicial dos sintomas?: ");
             Periodo = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-            Console.Write("Mandará para internação (s/n)?");
-            string status = Console.ReadLine();
-
-            if (status.ToLower() == "s")
-            {
-                return;
-            }
-            else
-            {
-                return;
-            }
         }
 
         public override string ToString()

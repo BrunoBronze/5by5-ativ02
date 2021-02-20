@@ -19,16 +19,14 @@ namespace Covid_19
                 Console.WriteLine("###### COVID 19 ######\n" +
                                   "1 - Cadastre um paciente\n" +
                                   "2 - Proximo da fila\n" +
-                                  "3 - Nao sei\n" +
-                                  "4 - Nao sei\n" +
-                                  "5 - Nao sei\n" +
-                                  "6 - Encerrar programa"); //Imprime o proximo e retira da fila.
+                                  "3 - Encerrar programa"); //Imprime o proximo e retira da fila.
                 Console.Write("\n>>>");
                 op = Console.ReadLine();
 
                 switch (op)
                 {
                     case "1":
+                        Console.Clear();
                         Console.Write("\nInforme o CPF: ");
                         string cpf = Console.ReadLine();
 
@@ -52,24 +50,28 @@ namespace Covid_19
                         break;
 
                     case "2":
-                        Console.WriteLine("Chamando próximo paciente para exame...");
+                        Console.Clear();
+                        
 
                         if (!filaPrioritaria.Vazia() && contador < 2)
                         {
+                            Console.WriteLine("Chamando próximo paciente para exame...");
                             paciente = filaPrioritaria.Head;
                             filaPrioritaria.Pop();
                             contador++;
 
-                            Exames(paciente);
+                            Imprimir(paciente);
+                            Infectado(paciente);
                         }
                         else if (!fila.Vazia())
                         {
+                            Console.WriteLine("Chamando próximo paciente para exame...");
                             paciente = fila.Head;
                             fila.Pop();
                             contador = 0;
-
-                            Exames(paciente);
-
+                            
+                            Imprimir(paciente);
+                            Infectado(paciente);
                         }
                         else
                         {
@@ -79,19 +81,19 @@ namespace Covid_19
 
                         break;
 
-                    case "6":
-                        Console.WriteLine("FINALIZANDO");
+                    case "3":
+                        Console.WriteLine(">>> FINALIZANDO <<<");
                         break;
 
                     default:
                         break;
                 }
-            } while (op != "6");
+            } while (op != "3");
         }
 
         static Paciente Leitura(string cpf)
         {
-            Console.WriteLine($"\nDigite os dados do CPF:  {cpf}");
+            //Console.WriteLine($"\nCPF digitado {cpf}");
 
             Console.Write("Nome :");
             string nome = Console.ReadLine();
@@ -111,6 +113,7 @@ namespace Covid_19
                 Telefone = telefone,
                 Proximo = null
             };
+
             Console.WriteLine();
             return paciente;
         }
@@ -121,12 +124,13 @@ namespace Covid_19
 
         static Paciente LeituraArquivo(string cpf)
         {
+            Console.Clear();
             ArquivoCSV arquivo = new ArquivoCSV();
             string[] propriedades = arquivo.Leitura();
 
             Paciente paciente = new Paciente
             {
-                Nome = propriedades[0],
+                Nome = "Bruno Bronze",
                 CPF = "43831426805",
                 DataNascimento = DateTime.ParseExact("24/03/2000", "dd/MM/yyyy", CultureInfo.InvariantCulture),
                 Telefone = "(16) 997252079",
@@ -135,23 +139,39 @@ namespace Covid_19
             Console.WriteLine();
             return paciente;
         }
-        static void Exames(Paciente paciente)
+        static void Imprimir(Paciente paciente)
         {
-            bool resultado;
-
+            Console.Clear();
             Console.WriteLine(paciente);
             Console.WriteLine();
+        }
 
-            resultado = paciente.VerificaStatus();
+        static void Infectado(Paciente paciente)
+        {
+            paciente.VerificaStatus();
 
-            if (paciente.Covid == false)
+            if (paciente.Covid)
             {
-                Console.WriteLine("Arquivando paciente...");
-                //pacienteE.Arquivar();
+
+                paciente.Importancia();
+
+                Console.Write("Mandará para internação (s/n)?");
+                string status = Console.ReadLine();
+
+                if (status.ToLower() == "s")
+                {
+                    Console.WriteLine("\nInternando\n");
+                }
+                else
+                {
+                    Console.WriteLine("\nArquivando paciente...\n");
+                    //pacienteE.Arquivar();
+                }
             }
             else
             {
-                paciente.Importancia();
+                Console.WriteLine("\nArquivando paciente...\n");
+                //pacienteE.Arquivar();
             }
         }
     }
