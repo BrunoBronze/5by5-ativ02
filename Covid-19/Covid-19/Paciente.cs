@@ -10,9 +10,8 @@ namespace Covid_19
         public DateTime DataNascimento { get; set; }
         public string Telefone { get; set; }
         public bool Comorbidade { get; set; }
-        public DateTime DataInicialSintomas { get; set; }
+        public int Periodo { get; set; }
         public bool Covid { get; set; }
-        public DateTime Periodo { get; set; }
         public Paciente Proximo { get; set; }
 
         public int Idade()
@@ -68,7 +67,6 @@ namespace Covid_19
         }
         public void Importancia()
         {
-            Console.Clear();
             string resposta;
 
             Console.Write("O paciente possui comorbidades[s/n]?: ");
@@ -83,8 +81,8 @@ namespace Covid_19
                 Comorbidade = false;
             }
 
-            Console.Write("Qual a data inicial dos sintomas?: ");
-            Periodo = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            Console.Write("Quantos dias de sintomas?: ");
+            Periodo = int.Parse(Console.ReadLine());
         }
 
         public override string ToString()
