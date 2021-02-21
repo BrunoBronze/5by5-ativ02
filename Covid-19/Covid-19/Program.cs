@@ -32,17 +32,18 @@ namespace Covid_19
             string op;
             do
             {
-                Console.WriteLine("###### COVID 19 ######\n" +
+                Console.WriteLine(">>>BEM VINDOS AO HOSPITAL DE CAMPANHA CONTA A COVID 19<<<\n" +
                                   "1 - Cadastre um paciente\n" +
                                   "2 - Proximo da fila\n" +
                                   "3 - Chamar para internacao\n" +
-                                  "4 - Encerrar programa"); //Imprime o proximo e retira da fila.
+                                  "4 - Encerrar programa");
                 Console.Write("\n>>>");
                 op = Console.ReadLine();
 
                 switch (op)
                 {
                     case "1":
+                        //Fluxo Triagem Inicial
                         Console.Clear();
                         Console.Write("\nInforme o CPF: ");
                         string cpf = Console.ReadLine();
@@ -56,7 +57,7 @@ namespace Covid_19
                         {
                             paciente = Leitura(cpf);
                         }
-
+                        //Fluxo da separação da fila
                         if (paciente.Idade() >= 60)
                         {
                             filaPrioritaria.Push(paciente);
@@ -69,7 +70,8 @@ namespace Covid_19
 
                     case "2":
                         Console.Clear();
-                        
+
+                        //Fluxo de fila
                         if (!filaPrioritaria.Vazia() && contador < 2)
                         {
                             Console.WriteLine("Chamando próximo paciente para exame...");
