@@ -16,7 +16,6 @@ namespace Covid_19
             {
                 Directory.CreateDirectory(@"C:\temp\ws-c#\5by5-ativ02");
             }
-            
             if (!File.Exists(arquivo.Path))
             {
                 FileStream file = File.Create(arquivo.Path);
@@ -37,7 +36,7 @@ namespace Covid_19
             string op;
             do
             {
-                Console.WriteLine(" >>>BEM VINDOS AO HOSPITAL DE CAMPANHA CONTA A COVID 19<<<\n" +
+                Console.WriteLine(" >>>BEM VINDOS AO HOSPITAL DE CAMPANHA COVID 19<<<\n" +
                                   "1 - Cadastre um paciente\n" +
                                   "2 - Proximo da fila\n" +
                                   "3 - Chamar para internacao\n" +
@@ -214,7 +213,16 @@ namespace Covid_19
                     {
                         naoUrgente.Push(paciente);
                     }
-                    arquivo.Salvar(paciente);
+
+                    int posicao = arquivo.ProcuraCPF(paciente.CPF);
+                    if (posicao != -1)
+                    {
+                        arquivo.Salvar(paciente, posicao);
+                    }
+                    else
+                    {
+                        arquivo.Salvar(paciente);
+                    }
                 }
                 else
                 {
