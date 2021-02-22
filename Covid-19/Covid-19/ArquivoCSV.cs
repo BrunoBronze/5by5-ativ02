@@ -87,7 +87,7 @@ namespace Covid_19
 
             string linepaciente = $"{paciente.CPF}," +
                                   $"{paciente.Nome}," +
-                                  $"{paciente.DataNascimento.ToString("dd/MM/yyyy")}," +
+                                  $"{paciente.DataNascimento:dd/MM/yyyy}," +
                                   $"{paciente.Telefone}," +
                                   $"{pacienteCSV[4]}," +
                                   $"{pacienteCSV[5]}," +
