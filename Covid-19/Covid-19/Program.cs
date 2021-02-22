@@ -37,7 +37,7 @@ namespace Covid_19
             do
             {
                 Console.WriteLine(" >>>BEM VINDOS AO HOSPITAL DE CAMPANHA COVID 19<<<\n" +
-                                  "1 - Cadastre um paciente\n" +
+                                  "\n1 - Cadastre um paciente\n" +
                                   "2 - Proximo da fila\n" +
                                   "3 - Chamar para internacao\n" +
                                   "4 - Encerrar programa");
@@ -49,7 +49,7 @@ namespace Covid_19
                     case "1":
                         //Fluxo Triagem Inicial
                         Console.Clear();
-                        Console.Write("\nInforme o CPF: ");
+                        Console.Write("Informe o CPF: ");
                         string cpf = Console.ReadLine();
 
                         if (arquivo.ProcuraCPF(cpf) != -1)
@@ -88,7 +88,7 @@ namespace Covid_19
                         }
                         else if (!fila.Vazia())
                         {
-                            Console.WriteLine("Chamando próximo paciente para exame...");
+                            Console.WriteLine("\nChamando próximo paciente para exame...");
                             paciente = fila.Head;
                             fila.Pop();
                             contador = 0;
@@ -98,7 +98,7 @@ namespace Covid_19
                         }
                         else
                         {
-                            Console.WriteLine("Não há ninguem na fila!");
+                            Console.WriteLine("\n>>> Não há ninguem na fila! <<<");
                             contador = 0;
                         }
 
@@ -130,7 +130,7 @@ namespace Covid_19
 
                         else
                         {
-                            Console.WriteLine("\nSem ninguém na fila para internação!!");
+                            Console.WriteLine("\n>>> Sem ninguém na fila para internação!! <<<");
                         }
 
                         break;
@@ -140,7 +140,7 @@ namespace Covid_19
                         break;
 
                     default:
-                        Console.WriteLine("Digite uma opção contida no menu !");
+                        Console.WriteLine("\nDigite uma opção contida no menu !\n");
                         break;
                 }
             } while (op != "4");

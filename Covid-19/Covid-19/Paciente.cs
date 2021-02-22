@@ -68,7 +68,7 @@ namespace Covid_19
         {
             string resposta;
 
-            Console.Write("O paciente possui comorbidades[s/n]?: ");
+            Console.Write("\nO paciente possui comorbidades[s/n]?: ");
             resposta = Console.ReadLine();
 
             if (resposta.ToUpper() == "S")
@@ -83,7 +83,7 @@ namespace Covid_19
             int p;
             do
             {
-                Console.Write("Quantos dias de sintomas?: ");
+                Console.Write("\nQuantos dias de sintomas?: ");
                 string periodo = Console.ReadLine();
 
                 if (int.TryParse(periodo, out p))
