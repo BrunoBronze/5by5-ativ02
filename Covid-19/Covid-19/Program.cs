@@ -14,6 +14,7 @@ namespace Covid_19
 
             if (!Directory.Exists(@"C:\temp\ws-c#\5by5-ativ02"))
             {
+                // OBS: E se não tiver permissão para criar o diretório????
                 Directory.CreateDirectory(@"C:\temp\ws-c#\5by5-ativ02");
             }
             if (!File.Exists(arquivo.Path))
@@ -31,6 +32,8 @@ namespace Covid_19
             FilaPacientes naoUrgente = new FilaPacientes();
 
             FilaPacientes assintomaticos = new FilaPacientes();
+            // ´Várias filas e um único arquivo?
+
             int contador = 0;
 
             string op;
@@ -52,6 +55,11 @@ namespace Covid_19
                         Console.Write("Informe o CPF: ");
                         string cpf = Console.ReadLine();
 
+                        // Só faz a leitura do arquivo para verificar se o paciente passou por ali
+                        // Não tem como saber quem são as pessoas internadas
+                        // Ficou bem "vago" essa situação sem imprimir dados da doença dos pacientes
+                        // Foi pedido para gravar o restante para manter um Histórico
+
                         if (arquivo.ProcuraCPF(cpf) != -1)
                         {
                             paciente = arquivo.Leitura(cpf);
@@ -61,9 +69,10 @@ namespace Covid_19
                         {
                             paciente = Leitura(cpf);
                         }
+
                         //Fluxo da separação da fila
-                        if (paciente.Idade() >= 60)
-                        {
+                        if (paciente.Idade() >= 60)  // ok - Fizeram controle da idade!!
+                        {                            // Usuário é brasileiro, além de tudo!!!
                             filaPrioritaria.Push(paciente);
                         }
                         else
@@ -76,12 +85,14 @@ namespace Covid_19
                         Console.Clear();
 
                         //Fluxo de fila
+                        //ok - Fizeram controle de proporção de chamada em filas - ok
+
                         if (!filaPrioritaria.Vazia() && contador < 2)
                         {
                             Console.WriteLine("Chamando próximo paciente para exame...");
                             paciente = filaPrioritaria.Head;
-                            filaPrioritaria.Pop();
-                            contador++;
+                            filaPrioritaria.Pop();    // ok - Mostra Nome de Paciente. e a senha(?) 
+                            contador++;               // na hora de chamar
 
                             Imprimir(paciente);
                             Infectado(paciente, urgente, poucoUrgente, naoUrgente, assintomaticos, arquivo);
@@ -106,6 +117,8 @@ namespace Covid_19
 
                     case "3":
                         Console.Clear();
+                        // ok - Separou a internacao em 3 filas
+                        // Dúvida: Se o programa parar de executar, como temos acesso às internações?
 
                         if (!urgente.Vazia())
                         {
@@ -154,7 +167,7 @@ namespace Covid_19
             string nome = Console.ReadLine();
 
             DateTime dataNascimento = DateTime.Parse("01/01/0001");
-            do
+            do //ok 
             {
                 Console.Write("Data de nascimento(dd/mm/aaaa): ");
                 string dn = Console.ReadLine();
@@ -185,14 +198,21 @@ namespace Covid_19
         static void Imprimir(Paciente paciente)
         {
             Console.Clear();
-            Console.WriteLine(paciente);
+            Console.WriteLine(paciente); // Sem os dados da avaliação/triagem???
             Console.WriteLine();
         }
 
+
+        // Questionamento: Esses métodos não ficariam melhores distribuidos em classes??
         static void Infectado(Paciente paciente, FilaPacientes urgente, FilaPacientes poucoUrgente, FilaPacientes naoUrgente, FilaPacientes assintomaticos, ArquivoCSV arquivo)
         {
             paciente.VerificaStatus();
-
+            // Só grava os dados de paciente infectado e após a internação
+            // E se o sistema tiver problema até essa etapa?????
+            // Muito confuso, pois não separa os pacientes em arquivos distintos para termos o histórico
+            // Além disso, os pacientes acabam voltando para poder internar novamente sem ter alta? E a alta?
+            // E se o sistema der problema durante o dia, com ou sem triagem? 
+            // Como recuperar as informações - era um dos quesitos
             if (paciente.Covid)
             {
                 Console.Write("\nPaciente está com sintomas?[S/N]: ");
@@ -221,7 +241,7 @@ namespace Covid_19
                     else
                     {
                         naoUrgente.Push(paciente);
-                    }
+                    }  // Que Lógica complexa da Urgência! Doidinha!
 
                     int posicao = arquivo.ProcuraCPF(paciente.CPF);
                     if (posicao != -1)
@@ -236,6 +256,11 @@ namespace Covid_19
                 else
                 {
                     assintomaticos.Push(paciente);
+
+                    // Dúvida: Aonde difere o assintomático do paciente
+                    // com sintomas????
+                    // Só vai saber se estiver internado?
+                    // E se a pessoa voltar???
                     Console.WriteLine("\nArquivando paciente...\n");
                     int posicao = arquivo.ProcuraCPF(paciente.CPF);
                     if (posicao != -1)

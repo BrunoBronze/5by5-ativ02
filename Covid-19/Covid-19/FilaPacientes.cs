@@ -6,6 +6,9 @@ namespace Covid_19
         public Paciente Head { get; set; }
         public Paciente Tail { get; set; }
 
+        // Só os 3 métodos?
+        // Nem a impressão?
+
         public bool Vazia()
         {
             if ((Head == null) && (Tail == null))

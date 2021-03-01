@@ -10,7 +10,7 @@ namespace Covid_19
         public string Telefone { get; set; }
         public bool Comorbidade { get; set; }
         public int Periodo { get; set; }
-        public bool Covid { get; set; }
+        public bool Covid { get; set; } // SIM/NÃO e o Assintomático? Como controla?
         public Paciente Proximo { get; set; }
 
         public int Idade()
@@ -97,6 +97,7 @@ namespace Covid_19
             } while (p == 0);
         }
 
+        // Não mostra as informações sobre o covid/ comorbidade???
         public override string ToString()
         {
             return $"\nCPF: {CPF}\n" +

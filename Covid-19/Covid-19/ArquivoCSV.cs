@@ -19,7 +19,7 @@ namespace Covid_19
                     string[] pacienteCSV = line.Split(',');
                     if (pacienteCSV[0] == cpf)
                     {
-                        return i;
+                        return i; // retorna a posição. Linha do registro? Está internado?
                     }
                 }
             }
@@ -49,6 +49,9 @@ namespace Covid_19
             }
             return null;
         }
+
+        //OBS: Sobrecarga para salvar
+        // Se o paciente é "novo"
         public void Salvar(Paciente paciente)
         {
             string linepaciente = $"{paciente.CPF}," +
@@ -57,13 +60,16 @@ namespace Covid_19
                                   $"{paciente.Telefone}," +
                                   $"{paciente.Comorbidade}," +
                                   $"{paciente.Periodo}," +
-                                  $"{paciente.Covid}";
+                                  $"{paciente.Covid}";  // Não armazena o histórico do paciente
             string[] lines = File.ReadAllLines(Path);
 
             StreamWriter sw = File.AppendText(Path);
             sw.Write("\n" + linepaciente);
             sw.Close();
         }
+
+        //Se o paciente já existia no arquivo
+        // Dúvida: Sobrescreve as informações????
         public void Salvar(Paciente paciente, int i)
         {
             
@@ -71,7 +77,7 @@ namespace Covid_19
             
             string line = lines[i];
             string[] pacienteCSV = line.Split(',');
-            
+            // Resposta: Sim. Perde o Histórico do paciente
             if (pacienteCSV[4] != paciente.Comorbidade.ToString())
             {
                 pacienteCSV[4] = paciente.Comorbidade.ToString();
